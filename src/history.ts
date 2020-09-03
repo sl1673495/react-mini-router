@@ -18,8 +18,8 @@ export interface Location<S extends State = State> extends Path {
   state: S;
 }
 
-let location = getInitialLocation();
-function getInitialLocation(): Location {
+let location = getLocation();
+function getLocation(): Location {
   const { pathname, search, hash } = window.location;
   return readOnly({
     pathname,
@@ -49,6 +49,12 @@ function listen(fn: Listener) {
     listeners = listeners.filter(listener => listener !== fn);
   };
 }
+
+// 用于处理浏览器前进后退操作
+window.addEventListener('popstate', () => {
+  location = getLocation();
+  listeners.forEach(fn => fn(location));
+});
 
 export const history = {
   get location() {

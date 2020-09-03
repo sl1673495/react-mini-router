@@ -14,8 +14,7 @@ export default () => {
   };
 
   useEffect(() => {
-    history.listen(({ action, location }) => {
-      console.log('action', action);
+    history.listen(location => {
       console.log('location', location);
     });
   }, []);
