@@ -24,6 +24,7 @@ export default () => {
     <div className="demo">
       <h1>History</h1>
 
+      <p>点击按钮后，url 会发生变化</p>
       <button onClick={() => go('foo')}>foo</button>
       <button onClick={() => go('bar')}>bar</button>
       <button onClick={() => go('baz')}>baz</button>

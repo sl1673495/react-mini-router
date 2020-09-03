@@ -32,5 +32,5 @@ export function parsePath(path: string) {
   return partialPath;
 }
 
-export const readOnly: <T extends unknown>(obj: T) => T = obj =>
+export const readOnly: <T extends unknown>(obj: T) => Readonly<T> = obj =>
   Object.freeze(obj);

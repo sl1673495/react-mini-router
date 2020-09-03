@@ -21,12 +21,12 @@ export interface Location<S extends State = State> extends Path {
 let location = getInitialLocation();
 function getInitialLocation(): Location {
   const { pathname, search, hash } = window.location;
-  return {
+  return readOnly({
     pathname,
     search,
     hash,
     state: null,
-  };
+  });
 }
 function getNextLocation(to: string, state: State = null) {
   return readOnly({
