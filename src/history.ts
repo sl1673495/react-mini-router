@@ -6,18 +6,7 @@ export interface history {
 
 export type State = object | null;
 
-export enum Action {
-  Pop = 'POP',
-  Push = 'Push',
-}
-
-export type Listener = ({
-  action,
-  location,
-}: {
-  action: Action;
-  location: Location;
-}) => any;
+export type Listener = (location: Location) => void;
 
 export interface Path {
   pathname: string;
@@ -29,6 +18,16 @@ export interface Location<S extends State = State> extends Path {
   state: S;
 }
 
+let location = getInitialLocation();
+function getInitialLocation(): Location {
+  const { pathname, search, hash } = window.location;
+  return {
+    pathname,
+    search,
+    hash,
+    state: null,
+  };
+}
 function getNextLocation(to: string, state: State = null) {
   return readOnly({
     ...parsePath(to),
@@ -37,10 +36,9 @@ function getNextLocation(to: string, state: State = null) {
 }
 
 function push(to: string, state?: State) {
-  const nextAction = Action.Push;
-  const nextLocation = getNextLocation(to, state);
+  location = getNextLocation(to, state);
   window.history.pushState(state, '', to);
-  listeners.forEach(cb => cb({ action: nextAction, location: nextLocation }));
+  listeners.forEach(fn => fn(location));
 }
 
 // 存储 history.listen 的回调函数
