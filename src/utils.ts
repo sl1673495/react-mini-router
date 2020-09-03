@@ -1,13 +1,10 @@
+// 参考 https://github.com/ReactTraining/react-router
 export interface Path {
   pathname: string;
   search: string;
   hash: string;
 }
-/**
- * Parses a string URL path into its separate pathname, search, and hash components.
- *
- * @see https://github.com/ReactTraining/history/tree/master/docs/api-reference.md#parsepath
- */
+
 export function parsePath(path: string) {
   let partialPath = {} as Path;
 
